@@ -147,7 +147,7 @@ def drawWindow():
     DoneList.bind("<Right>", _MoveToArchives)
     DoneList.bind("<Left>", _BackToInProgress)
 
-    DoneButton = Widget.GetButton(DoneFrame, _Text="Archives", _Command=lambda:MoveForward(s_List[3]))
+    DoneButton = Widget.GetButton(DoneFrame, _Text="Archive", _Command=lambda:MoveForward(s_List[3]))
     DoneButton.pack(side=BOTTOM, fill=X)
 
     DoneEntry = Widget.GetEntry(DoneFrame)
