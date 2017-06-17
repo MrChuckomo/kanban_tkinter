@@ -10,4 +10,4 @@ A simple Kanban Board made with python(TM) 2.7 and tkinter.
 + Add tasks to any stage (To Do, In Progress, Done)
 + Delete selected tasks by pressing the delete key
 + Use arrow keys to move tasks around
-+ Export the board to a CSV file with <Command-E>
++ Export the board to a CSV file with "Command-E"
