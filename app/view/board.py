@@ -7,15 +7,28 @@ __Creation_Date__ = "15-Jun-2017"
 """
 # / ---------------------------------------------------------------------------------------------------
 
+import sys
+sys.path.append("../")
+
 from Tkinter import *
 from view import components as Widget
 from view import color as Color
+from model import kanban_db as Db
 
 # / ---------------------------------------------------------------------------------------------------
 
 s_List = ["todo", "in_progress", "done", "archives"]
 
 def drawWindow():
+
+    def LoadData():
+
+        for Row in Db.SelectData("todo"):
+            ToDoList.insert(END, Row[1])
+        for Row in Db.SelectData("inprogress"):
+            InProgressList.insert(END, Row[1])
+        for Row in Db.SelectData("done"):
+            DoneList.insert(END, Row[1])
 
     def Add(_List):
 
@@ -225,6 +238,8 @@ def drawWindow():
     # DoneEntry.bind("<Up>", _FocusUpDone)
 
     # / ---------------------------------------------------------------------------------------------------
+
+    LoadData()
 
     Window.bind("<Command-e>", _ExportToCsv)
     Window.mainloop()
