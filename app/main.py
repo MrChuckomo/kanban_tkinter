@@ -8,5 +8,4 @@ __Creation_Date__ = "15-Jun-2017"
 
 from view import board as BoardGui
 
-
 BoardGui.drawWindow()
