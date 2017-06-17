@@ -46,7 +46,17 @@ def InsertData(_Table, _Task):
     KanbanConnetion.commit()
     KanbanConnetion.close()
 
-# TODO: delete function
+
+def DeleteData(_Table, _Id):
+
+    KanbanConnetion = Sql.connect("kanban.db")
+    KanbanCursor = KanbanConnetion.cursor()
+
+    _ExecuteDeletion(KanbanCursor, _Table, _Id)
+
+    KanbanConnetion.commit()
+    KanbanConnetion.close()
+
 
 def _ExecuteInsertion(_Cursor, _Table, _Id, _Task):
 
@@ -58,6 +68,22 @@ def _ExecuteInsertion(_Cursor, _Table, _Id, _Task):
         _Cursor.execute("INSERT INTO done (id, donetask) VALUES (?, ?)", (_Id, _Task,))
     elif _Table == "archives":
         _Cursor.execute("INSERT INTO archives (id, archivetask) VALUES (?, ?)", (_Id, _Task,))
+
+
+def _ExecuteDeletion(_Cursor, _Table, _Id):
+
+    if _Table == "todo":
+        _Cursor.execute("DELETE FROM todo WHERE id=" + _Id)
+    elif _Table == "inprogress":
+        _Cursor.execute("DELETE FROM inprogress WHERE id=" + _Id)
+    elif _Table == "done":
+        _Cursor.execute("DELETE FROM done WHERE id=" + _Id)
+    elif _Table == "archives":
+        _Cursor.execute("DELETE FROM archives WHERE id=" + _Id)
+
+
+# TODO: helper methode for deletion to find id by taskname
+
 
 def _GetLastId(_Table):
 
