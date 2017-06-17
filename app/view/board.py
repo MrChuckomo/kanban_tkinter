@@ -90,6 +90,21 @@ def drawWindow():
     def _BackToInProgress(_Self=0):
         MoveBackward(s_List[1])
 
+    def _ExportToCsv(_Self=0):
+
+        File = open("kanban_export.csv", "w")
+
+        for Row in ToDoList.get(0, END):
+            File.write(str(Row) + ";to_do\n")
+
+        for Row in InProgressList.get(0, END):
+            File.write(str(Row) + ";in_progress\n")
+
+        for Row in DoneList.get(0, END):
+            File.write(str(Row) + ";done\n")
+
+        File.close()
+
     # / ---------------------------------------------------------------------------------------------------
 
     Window = Tk()
@@ -156,4 +171,5 @@ def drawWindow():
 
     # / ---------------------------------------------------------------------------------------------------
 
+    Window.bind("<Command-e>", _ExportToCsv)
     Window.mainloop()
