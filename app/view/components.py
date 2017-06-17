@@ -11,22 +11,22 @@ from view import color as Color
 
 s_DefaultFont = ("Helvetica", "16")
 
-def GetList(_Root, _FgColor=Color.s_LightWhite):
+def GetList(_Root, _BgColor=Color.s_LightWhite, _FgColor=Color.s_DarkBlack):
     return Listbox\
     (
         _Root,
-        bg=Color.s_DarkBlack,
+        bg=_BgColor,
         fg=_FgColor,
         bd=0,
         font=s_DefaultFont
     )
 
-def GetLabelFrame(_Root, _Text, _FgColor=Color.s_LightWhite):
+def GetLabelFrame(_Root, _Text, _BgColor=Color.s_LightWhite, _FgColor=Color.s_LightWhite):
     return LabelFrame\
     (
         _Root,
         text=_Text,
-        bg=Color.s_DarkBlack,
+        bg=_BgColor,
         fg=_FgColor,
         font=s_DefaultFont
     )
@@ -38,12 +38,12 @@ def GetFrame(_Root):
         bg=Color.s_DarkBlack
     )
 
-def GetEntry(_Root):
+def GetEntry(_Root, _BgColor=Color.s_DarkWhite, _FgColor=Color.s_DarkBlack):
     return Entry\
     (
         _Root,
-        bg=Color.s_DarkBlack,
-        fg=Color.s_LightWhite,
+        bg=_BgColor,
+        fg=_FgColor,
         font=s_DefaultFont
     )
 

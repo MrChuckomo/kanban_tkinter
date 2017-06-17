@@ -93,36 +93,36 @@ def drawWindow():
     # / ---------------------------------------------------------------------------------------------------
 
     Window = Tk()
-    Window.title("tkinter Kanban")
+    Window.title("Kanban (tkinter)")
     Window.minsize(width=1200, height=600)
     
     # / ---------------------------------------------------------------------------------------------------
 
     # / To Do 
 
-    ToDoFrame = Widget.GetLabelFrame(Window, _Text="To Do", _FgColor=Color.s_LightRed)
+    ToDoFrame = Widget.GetLabelFrame(Window, _Text="To Do", _FgColor=Color.s_DarkRed)
     ToDoFrame.pack(side=LEFT, fill=BOTH, expand=1)
 
-    ToDoList = Widget.GetList(ToDoFrame, _FgColor=Color.s_LightRed)
-    ToDoList.pack(fill=BOTH, expand=1)
+    ToDoList = Widget.GetList(ToDoFrame, _FgColor=Color.s_DarkRed)
+    ToDoList.pack(fill=BOTH, expand=1, padx=5, pady=10)
     ToDoList.bind("<BackSpace>", _DeleteToDo)
     ToDoList.bind("<Delete>", _DeleteToDo)
     ToDoList.bind("<Right>", _MoveToInProgress)
 
     ToDoButton = Widget.GetButton(ToDoFrame, _Text="In Progress", _Command=lambda:MoveForward(s_List[1]))
     ToDoButton.pack(side=BOTTOM, fill=X)
-    
+
     ToDoEntry = Widget.GetEntry(ToDoFrame)
     ToDoEntry.pack(side=BOTTOM, fill=X)
     ToDoEntry.bind("<Return>", _AddToToDo)
 
     # / In Progress
 
-    InProgressFrame = Widget.GetLabelFrame(Window, _Text="In Progress", _FgColor=Color.s_LightYellow)
+    InProgressFrame = Widget.GetLabelFrame(Window, _Text="In Progress", _FgColor=Color.s_DarkYellow)
     InProgressFrame.pack(side=LEFT, fill=BOTH, expand=1)
 
-    InProgressList = Widget.GetList(InProgressFrame, _FgColor=Color.s_LightYellow)
-    InProgressList.pack(fill=BOTH, expand=1)
+    InProgressList = Widget.GetList(InProgressFrame, _FgColor=Color.s_DarkYellow)
+    InProgressList.pack(fill=BOTH, expand=1, padx=5, pady=10)
     InProgressList.bind("<BackSpace>", _DeleteInProgress)
     InProgressList.bind("<Delete>", _DeleteInProgress)
     InProgressList.bind("<Right>", _MoveToDone)
@@ -137,11 +137,11 @@ def drawWindow():
 
     # / Done
 
-    DoneFrame = Widget.GetLabelFrame(Window, _Text="Done", _FgColor=Color.s_LightGreen)
+    DoneFrame = Widget.GetLabelFrame(Window, _Text="Done", _FgColor=Color.s_DarkGreen)
     DoneFrame.pack(side=LEFT, fill=BOTH, expand=1)
 
-    DoneList = Widget.GetList(DoneFrame, _FgColor=Color.s_LightGreen)
-    DoneList.pack(fill=BOTH, expand=1)
+    DoneList = Widget.GetList(DoneFrame, _FgColor=Color.s_DarkGreen)
+    DoneList.pack(fill=BOTH, expand=1, padx=5, pady=10)
     DoneList.bind("<BackSpace>", _DeleteDone)
     DoneList.bind("<Delete>", _DeleteDone)
     DoneList.bind("<Right>", _MoveToArchives)
