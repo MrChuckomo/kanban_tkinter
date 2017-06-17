@@ -47,12 +47,23 @@ def InsertData(_Table, _Task):
     KanbanConnetion.close()
 
 
-def DeleteData(_Table, _Id):
+def DeleteDataById(_Table, _Id):
 
     KanbanConnetion = Sql.connect("kanban.db")
     KanbanCursor = KanbanConnetion.cursor()
 
     _ExecuteDeletion(KanbanCursor, _Table, _Id)
+
+    KanbanConnetion.commit()
+    KanbanConnetion.close()
+
+
+def DeleteDataByTask(_Table, _Task):
+
+    KanbanConnetion = Sql.connect("kanban.db")
+    KanbanCursor = KanbanConnetion.cursor()
+
+    _ExecuteDeletion(KanbanCursor, _Table, str(_GetIdWhereTaskIs(_Table, _Task)))
 
     KanbanConnetion.commit()
     KanbanConnetion.close()
@@ -82,8 +93,17 @@ def _ExecuteDeletion(_Cursor, _Table, _Id):
         _Cursor.execute("DELETE FROM archives WHERE id=" + _Id)
 
 
-# TODO: helper methode for deletion to find id by taskname
+def _GetIdWhereTaskIs(_Table, _Task):
 
+    Id = 0
+
+    for Row in SelectData(_Table=_Table):
+
+        if Row[1] == _Task:
+
+            Id = Row[0]
+
+    return Id
 
 def _GetLastId(_Table):
 
@@ -91,7 +111,7 @@ def _GetLastId(_Table):
     KanbanCursor = KanbanConnetion.cursor()
 
     Data = SelectData(_Table)
-    Id   = 1;
+    Id   = 1
 
     if len(Data) > 0:
         Id = (Data[len(Data) - 1][0]) + 1
