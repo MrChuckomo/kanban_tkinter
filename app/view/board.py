@@ -15,7 +15,7 @@ s_List = ["todo", "in_progress", "done", "archives"]
 def drawWindow():
 
     def Add(_List):
-        
+
         if _List == s_List[0] and ToDoEntry.get() != "":
             ToDoList.insert(END, ToDoEntry.get())
             ToDoEntry.delete(0, END)
@@ -25,7 +25,7 @@ def drawWindow():
         elif _List == s_List[2] and DoneEntry.get() != "":
             DoneList.insert(END, DoneEntry.get())
             DoneEntry.delete(0, END)
-    
+
     def Delete(_List):
 
         if _List == s_List[0]:
@@ -113,7 +113,7 @@ def drawWindow():
     
     # / ---------------------------------------------------------------------------------------------------
 
-    # / To Do 
+    # / To Do
 
     ToDoFrame = Widget.GetLabelFrame(Window, _Text="To Do", _FgColor=Color.s_LightRed, _BgColor=Color.s_DarkBlack)
     ToDoFrame.pack(side=LEFT, fill=BOTH, expand=1)
