@@ -11,8 +11,4 @@ from model import kanban_db as Db
 
 Db.InitDb()
 
-# Db.InsertData(_Table="todo", _Task="Use SQLite to save data")
-# Db.InsertData(_Table="todo", _Task="Change color scheme")
-# Db.InsertData(_Table="inprogress", _Task="Develop pyhton Kanban board")
-
 BoardGui.drawWindow()
