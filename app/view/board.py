@@ -23,6 +23,10 @@ def drawWindow():
 
     def LoadData():
 
+        ToDoList.delete(0, END)
+        InProgressList.delete(0, END)
+        DoneList.delete(0, END)
+
         for Row in Db.SelectData("todo"):
             ToDoList.insert(END, Row[1])
         for Row in Db.SelectData("inprogress"):
@@ -33,47 +37,56 @@ def drawWindow():
     def Add(_List):
 
         if _List == s_List[0] and ToDoEntry.get() != "":
-            ToDoList.insert(END, ToDoEntry.get())
+            Db.InsertData(_Table="todo", _Task=ToDoEntry.get())
             ToDoEntry.delete(0, END)
         elif _List == s_List[1] and InProgressEntry.get() != "":
-            InProgressList.insert(END, InProgressEntry.get())
+            Db.InsertData(_Table="inprogress", _Task=InProgressEntry.get())
             InProgressEntry.delete(0, END)
         elif _List == s_List[2] and DoneEntry.get() != "":
-            DoneList.insert(END, DoneEntry.get())
+            Db.InsertData(_Table="done", _Task=DoneEntry.get())
             DoneEntry.delete(0, END)
+
+        LoadData()
 
     def Delete(_List):
 
         if _List == s_List[0]:
-            ToDoList.delete(ACTIVE)
+            Db.DeleteDataByTask(_Table="todo", _Task=ToDoList.get(ACTIVE))
         elif _List == s_List[1]:
-            InProgressList.delete(ACTIVE)
+            Db.DeleteDataByTask(_Table="inprogress", _Task=InProgressList.get(ACTIVE))
         elif _List == s_List[2]:
-            DoneList.delete(ACTIVE)
+            Db.DeleteDataByTask(_Table="done", _Task=DoneList.get(ACTIVE))
+
+        LoadData()
 
     def MoveForward(_List):
 
         if _List == s_List[1] and ToDoList.get(ACTIVE) != "":
-            InProgressList.insert(END, ToDoList.get(ACTIVE))
-            ToDoList.delete(ACTIVE)
+            Db.InsertData(_Table="inprogress", _Task=ToDoList.get(ACTIVE))
+            Db.DeleteDataByTask(_Table="todo", _Task=ToDoList.get(ACTIVE))
             InProgressList.focus()
         elif _List == s_List[2] and InProgressList.get(ACTIVE) != "":
-            DoneList.insert(END, InProgressList.get(ACTIVE))
-            InProgressList.delete(ACTIVE)
+            Db.InsertData(_Table="done", _Task=InProgressList.get(ACTIVE))
+            Db.DeleteDataByTask(_Table="inprogress", _Task=InProgressList.get(ACTIVE))
             DoneList.focus()
         elif _List == s_List[3] and DoneList.get(ACTIVE) != "":
-            DoneList.delete(ACTIVE)
+            Db.InsertData(_Table="archives", _Task=DoneList.get(ACTIVE))
+            Db.DeleteDataByTask(_Table="done", _Task=DoneList.get(ACTIVE))
+
+        LoadData()
 
     def MoveBackward(_List):
 
         if _List == s_List[0] and InProgressList.get(ACTIVE) != "":
-            ToDoList.insert(END, InProgressList.get(ACTIVE))
-            InProgressList.delete(ACTIVE)
+            Db.InsertData(_Table="todo", _Task=InProgressList.get(ACTIVE))
+            Db.DeleteDataByTask(_Table="inprogress", _Task=InProgressList.get(ACTIVE))
             ToDoList.focus()
         elif _List == s_List[1] and DoneList.get(ACTIVE) != "":
-            InProgressList.insert(END, DoneList.get(ACTIVE))
-            DoneList.delete(ACTIVE)
+            Db.InsertData(_Table="inprogress", _Task=DoneList.get(ACTIVE))
+            Db.DeleteDataByTask(_Table="done", _Task=DoneList.get(ACTIVE))
             InProgressList.focus()
+
+        LoadData()
 
     def FocusDown(_List):
 
