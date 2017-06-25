@@ -5,9 +5,12 @@ __Author__        = "MrChuckomo"
 __Version__       = "v1.0.0"
 __Creation_Date__ = "16-Jun-2017"
 """
+# / ----------------------------------------------------------------------------
 
 from Tkinter  import *
 from view import color as Color
+
+# / ----------------------------------------------------------------------------
 
 s_DefaultFont = ("Helvetica", "16")
 

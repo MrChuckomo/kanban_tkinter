@@ -1,0 +1,5 @@
+list_background = s_DarkBlack
+list_foreground = s_LightWhite
+entry_background = s_DarkWhite
+entry_foreground = s_DarkBlack
+entry_selection = s_DarkCyan

@@ -1,0 +1,10 @@
+list_background = s_LightWhite
+todo_list_foreground = s_DarkRed
+todo_foreground = s_DarkBlack
+inprogress_list_foreground = s_DarkYellow
+inprogress_foreground = s_DarkBlack
+done_list_foreground = s_DarkGreen
+done_foreground = s_DarkBlack
+entry_background = s_DarkWhite
+entry_foreground = s_DarkBlack
+entry_selection = s_DarkCyan
