@@ -5,7 +5,7 @@ __Author__        = "MrChuckomo"
 __Version__       = "v1.0.0"
 __Creation_Date__ = "15-Jun-2017"
 """
-# / ---------------------------------------------------------------------------------------------------
+# / ----------------------------------------------------------------------------
 
 import sys
 sys.path.append("../")
@@ -15,7 +15,7 @@ from view import components as Widget
 from view import color as Color
 from model import kanban_db as Db
 
-# / ---------------------------------------------------------------------------------------------------
+# / ----------------------------------------------------------------------------
 
 s_List = ["todo", "in_progress", "done", "archives"]
 
@@ -165,6 +165,26 @@ def drawWindow():
     def _FocusUpDone(_Self=0):
         FocusUp(s_List[2])
 
+    def _FocusList(_List):
+        if _List == s_List[0]:
+            ToDoList.focus()
+        elif _List == s_List[1]:
+            InProgressList.focus()
+        elif _List == s_List[2]:
+            DoneList.focus()
+
+    def _FocusTodo(_Self=0):
+        _FocusList(s_List[0])
+
+    def _FocusInProgress(_Self=0):
+        _FocusList(s_List[1])
+
+    def _FocusDone(_Self=0):
+        _FocusList(s_List[2])
+
+    def _FocusEntry(_Self=0):
+        ToDoEntry.focus()
+
     def _ExportToCsv(_Self=0):
 
         File = open("kanban_export.csv", "w")
@@ -197,7 +217,8 @@ def drawWindow():
     ToDoList.pack(fill=BOTH, expand=1, padx=5, pady=10)
     ToDoList.bind("<BackSpace>", _DeleteToDo)
     ToDoList.bind("<Delete>", _DeleteToDo)
-    ToDoList.bind("<Right>", _MoveToInProgress)
+    ToDoList.bind("<Command-Right>", _MoveToInProgress)
+    ToDoList.bind("<Right>", _FocusInProgress)
     ToDoList.bind("<Down>", _FocusDownToDo)
 
     ToDoButton = Widget.GetButton(ToDoFrame, _Text="In Progress", _Command=lambda:MoveForward(s_List[1]), _HighlightColor=Color.s_DarkBlack)
@@ -217,8 +238,10 @@ def drawWindow():
     InProgressList.pack(fill=BOTH, expand=1, padx=5, pady=10)
     InProgressList.bind("<BackSpace>", _DeleteInProgress)
     InProgressList.bind("<Delete>", _DeleteInProgress)
-    InProgressList.bind("<Right>", _MoveToDone)
-    InProgressList.bind("<Left>", _BackToToDo)
+    InProgressList.bind("<Command-Right>", _MoveToDone)
+    InProgressList.bind("<Command-Left>", _BackToToDo)
+    InProgressList.bind("<Right>", _FocusDone)
+    InProgressList.bind("<Left>", _FocusTodo)
     InProgressList.bind("<Down>", _FocusDownInProgress)
 
     InProgressButton = Widget.GetButton(InProgressFrame, _Text="Done", _Command=lambda:MoveForward(s_List[2]), _HighlightColor=Color.s_DarkBlack)
@@ -238,8 +261,9 @@ def drawWindow():
     DoneList.pack(fill=BOTH, expand=1, padx=5, pady=10)
     DoneList.bind("<BackSpace>", _DeleteDone)
     DoneList.bind("<Delete>", _DeleteDone)
-    DoneList.bind("<Right>", _MoveToArchives)
-    DoneList.bind("<Left>", _BackToInProgress)
+    DoneList.bind("<Command-Right>", _MoveToArchives)
+    DoneList.bind("<Command-Left>", _BackToInProgress)
+    DoneList.bind("<Left>", _FocusInProgress)
     DoneList.bind("<Down>", _FocusDownDone)
 
     DoneButton = Widget.GetButton(DoneFrame, _Text="Archive", _Command=lambda:MoveForward(s_List[3]), _HighlightColor=Color.s_DarkBlack)
@@ -255,4 +279,5 @@ def drawWindow():
     LoadData()
 
     Window.bind("<Command-e>", _ExportToCsv)
+    Window.bind("<Command-i>", _FocusEntry)
     Window.mainloop()
