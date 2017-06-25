@@ -1,5 +1,10 @@
-list_background = F7F7F7
-list_foreground = 242424
-entry_background = B0B0B0
-entry_foreground = 242424
-entry_selection = 218693
+list_background = s_LightWhite
+todo_list_foreground = s_DarkRed
+todo_foreground = s_DarkBlack
+inprogress_list_foreground = s_DarkYellow
+inprogress_foreground = s_DarkBlack
+done_list_foreground = s_DarkGreen
+done_foreground = s_DarkBlack
+entry_background = s_DarkWhite
+entry_foreground = s_DarkBlack
+entry_selection = s_DarkCyan
