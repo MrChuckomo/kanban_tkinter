@@ -11,7 +11,7 @@ import sys
 sys.path.append("../")
 
 from Tkinter import *
-from view import components as Widget
+from view import components as TkComponents
 from view import color as Color
 from model import kanban_db as Db
 
@@ -202,39 +202,60 @@ def drawWindow():
 
     # / ---------------------------------------------------------------------------------------------------
 
+    Widget = TkComponents.CTkComponents("LIGHT")
+
+    # / ---------------------------------------------------------------------------------------------------
+
     Window = Tk()
     Window.title("Kanban (tkinter)")
     Window.minsize(width=1200, height=600)
 
     # / ---------------------------------------------------------------------------------------------------
 
+    # / Projects
+
+    ProjectFrame = Widget.GetFrame(Window)
+    ProjectFrame.pack(side=TOP, fill=X)
+
+    Option = StringVar()
+    Option.set("General Tasks")
+    ProjectMenu = OptionMenu(ProjectFrame, Option, "General Tasks", "Others")
+    ProjectMenu.configure(bg=Color.s_LightGrey)
+    ProjectMenu.pack(side=LEFT)
+
+    CreateProjectButton = Widget.GetButton(ProjectFrame, "Create Project")
+    CreateProjectButton.pack(side=RIGHT, padx=10)
+
+    DeleteProjectButton = Widget.GetButton(ProjectFrame, "Delete Project")
+    DeleteProjectButton.pack(side=RIGHT)
+
     # / To Do
 
-    ToDoFrame = Widget.GetLabelFrame(Window, _Text="To Do", _FgColor=Color.s_LightRed, _BgColor=Color.s_DarkBlack)
+    ToDoFrame = Widget.GetLabelFrame(Window, _Text="To Do")
     ToDoFrame.pack(side=LEFT, fill=BOTH, expand=1)
 
-    ToDoList = Widget.GetList(ToDoFrame, _FgColor=Color.s_LightRed, _BgColor=Color.s_DarkBlack)
+    ToDoList = Widget.GetList(ToDoFrame)
     ToDoList.pack(fill=BOTH, expand=1, padx=5, pady=10)
     ToDoList.bind("<BackSpace>", _DeleteToDo)
     ToDoList.bind("<Delete>", _DeleteToDo)
     ToDoList.bind("<Command-Right>", _MoveToInProgress)
     ToDoList.bind("<Right>", _FocusInProgress)
-    ToDoList.bind("<Down>", _FocusDownToDo)
+    # ToDoList.bind("<Down>", _FocusDownToDo)
 
-    ToDoButton = Widget.GetButton(ToDoFrame, _Text="In Progress", _Command=lambda:MoveForward(s_List[1]), _HighlightColor=Color.s_DarkBlack)
+    ToDoButton = Widget.GetButton(ToDoFrame, _Text="In Progress", _Command=lambda:MoveForward(s_List[1]))
     ToDoButton.pack(side=BOTTOM, fill=X)
 
-    ToDoEntry = Widget.GetEntry(ToDoFrame, _HighlightColor=Color.s_DarkBlack)
+    ToDoEntry = Widget.GetEntry(ToDoFrame)
     ToDoEntry.pack(side=BOTTOM, fill=X)
     ToDoEntry.bind("<Return>", _AddToToDo)
     # ToDoEntry.bind("<Up>", _FocusUpToDo)
 
     # / In Progress
 
-    InProgressFrame = Widget.GetLabelFrame(Window, _Text="In Progress", _FgColor=Color.s_LightYellow, _BgColor=Color.s_DarkBlack)
+    InProgressFrame = Widget.GetLabelFrame(Window, _Text="In Progress")
     InProgressFrame.pack(side=LEFT, fill=BOTH, expand=1)
 
-    InProgressList = Widget.GetList(InProgressFrame, _FgColor=Color.s_LightYellow, _BgColor=Color.s_DarkBlack)
+    InProgressList = Widget.GetList(InProgressFrame)
     InProgressList.pack(fill=BOTH, expand=1, padx=5, pady=10)
     InProgressList.bind("<BackSpace>", _DeleteInProgress)
     InProgressList.bind("<Delete>", _DeleteInProgress)
@@ -242,34 +263,34 @@ def drawWindow():
     InProgressList.bind("<Command-Left>", _BackToToDo)
     InProgressList.bind("<Right>", _FocusDone)
     InProgressList.bind("<Left>", _FocusTodo)
-    InProgressList.bind("<Down>", _FocusDownInProgress)
+    # InProgressList.bind("<Down>", _FocusDownInProgress)
 
-    InProgressButton = Widget.GetButton(InProgressFrame, _Text="Done", _Command=lambda:MoveForward(s_List[2]), _HighlightColor=Color.s_DarkBlack)
+    InProgressButton = Widget.GetButton(InProgressFrame, _Text="Done", _Command=lambda:MoveForward(s_List[2]))
     InProgressButton.pack(side=BOTTOM, fill=X)
 
-    InProgressEntry = Widget.GetEntry(InProgressFrame, _HighlightColor=Color.s_DarkBlack)
+    InProgressEntry = Widget.GetEntry(InProgressFrame)
     InProgressEntry.pack(side=BOTTOM, fill=X)
     InProgressEntry.bind("<Return>", _AddToProgress)
     # InProgressEntry.bind("<Up>", _FocusUpInProgress)
 
     # / Done
 
-    DoneFrame = Widget.GetLabelFrame(Window, _Text="Done", _FgColor=Color.s_LightGreen, _BgColor=Color.s_DarkBlack)
+    DoneFrame = Widget.GetLabelFrame(Window, _Text="Done")
     DoneFrame.pack(side=LEFT, fill=BOTH, expand=1)
 
-    DoneList = Widget.GetList(DoneFrame, _FgColor=Color.s_LightGreen, _BgColor=Color.s_DarkBlack)
+    DoneList = Widget.GetList(DoneFrame)
     DoneList.pack(fill=BOTH, expand=1, padx=5, pady=10)
     DoneList.bind("<BackSpace>", _DeleteDone)
     DoneList.bind("<Delete>", _DeleteDone)
     DoneList.bind("<Command-Right>", _MoveToArchives)
     DoneList.bind("<Command-Left>", _BackToInProgress)
     DoneList.bind("<Left>", _FocusInProgress)
-    DoneList.bind("<Down>", _FocusDownDone)
+    # DoneList.bind("<Down>", _FocusDownDone)
 
-    DoneButton = Widget.GetButton(DoneFrame, _Text="Archive", _Command=lambda:MoveForward(s_List[3]), _HighlightColor=Color.s_DarkBlack)
+    DoneButton = Widget.GetButton(DoneFrame, _Text="Archive", _Command=lambda:MoveForward(s_List[3]))
     DoneButton.pack(side=BOTTOM, fill=X)
 
-    DoneEntry = Widget.GetEntry(DoneFrame, _HighlightColor=Color.s_DarkBlack)
+    DoneEntry = Widget.GetEntry(DoneFrame)
     DoneEntry.pack(side=BOTTOM, fill=X)
     DoneEntry.bind("<Return>", _AddToDone)
     # DoneEntry.bind("<Up>", _FocusUpDone)
