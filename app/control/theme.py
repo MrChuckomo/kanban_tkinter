@@ -17,7 +17,7 @@ s_Dark  = "theme/macos_dark.csv"
 # / ----------------------------------------------------------------------------
 
 
-"""
+"""@package docstring
     Function: GetTheme
 
     Get one of the defined themes as a python dictionary.
@@ -31,6 +31,8 @@ s_Dark  = "theme/macos_dark.csv"
 
         Return a theme file as dictionary array.
 """
+
+
 def GetTheme(_Theme=s_Light):
 
     File = open(_Theme, "r")
