@@ -5,19 +5,21 @@ __Author__        = "MrChuckomo"
 __Version__       = "v1.0.0"
 __Creation_Date__ = "15-Jun-2017"
 """
-# / ----------------------------------------------------------------------------
+# / --------------------------------------------------------------------------------------------------------------------
 
-import sys
-sys.path.append("../")
-
-from Tkinter import *
+from Tkinter import Tk, OptionMenu, StringVar, END, ACTIVE, BOTH, BOTTOM, LEFT, RIGHT, X, TOP
 from view import components as TkComponents
 from view import color as Color
 from model import kanban_db as Db
 
-# / ----------------------------------------------------------------------------
+import sys
+sys.path.append("../")
+
+
+# / --------------------------------------------------------------------------------------------------------------------
 
 s_List = ["todo", "in_progress", "done", "archives"]
+
 
 def drawWindow():
 
@@ -85,7 +87,6 @@ def drawWindow():
             Db.InsertData(_Table="inprogress", _Task=DoneList.get(ACTIVE))
             Db.DeleteDataByTask(_Table="done", _Task=DoneList.get(ACTIVE))
             InProgressList.focus()
-
         LoadData()
 
     def FocusDown(_List):
@@ -112,7 +113,7 @@ def drawWindow():
             DoneList.focus()
             DoneEntry.delete(0, END)
 
-    # / ---------------------------------------------------------------------------------------------------
+    # / ----------------------------------------------------------------------------------------------------------------
 
     def _AddToToDo(_Self=0):
         Add(s_List[0])
@@ -200,17 +201,17 @@ def drawWindow():
 
         File.close()
 
-    # / ---------------------------------------------------------------------------------------------------
+    # / ----------------------------------------------------------------------------------------------------------------
 
     Widget = TkComponents.CTkComponents("LIGHT")
 
-    # / ---------------------------------------------------------------------------------------------------
+    # / ----------------------------------------------------------------------------------------------------------------
 
     Window = Tk()
     Window.title("Kanban (tkinter)")
     Window.minsize(width=1200, height=600)
 
-    # / ---------------------------------------------------------------------------------------------------
+    # / ----------------------------------------------------------------------------------------------------------------
 
     # / Projects
 
@@ -242,7 +243,7 @@ def drawWindow():
     ToDoList.bind("<Right>", _FocusInProgress)
     # ToDoList.bind("<Down>", _FocusDownToDo)
 
-    ToDoButton = Widget.GetButton(ToDoFrame, _Text="In Progress", _Command=lambda:MoveForward(s_List[1]))
+    ToDoButton = Widget.GetButton(ToDoFrame, _Text="In Progress", _Command=lambda: MoveForward(s_List[1]))
     ToDoButton.pack(side=BOTTOM, fill=X)
 
     ToDoEntry = Widget.GetEntry(ToDoFrame)
@@ -265,7 +266,7 @@ def drawWindow():
     InProgressList.bind("<Left>", _FocusTodo)
     # InProgressList.bind("<Down>", _FocusDownInProgress)
 
-    InProgressButton = Widget.GetButton(InProgressFrame, _Text="Done", _Command=lambda:MoveForward(s_List[2]))
+    InProgressButton = Widget.GetButton(InProgressFrame, _Text="Done", _Command=lambda: MoveForward(s_List[2]))
     InProgressButton.pack(side=BOTTOM, fill=X)
 
     InProgressEntry = Widget.GetEntry(InProgressFrame)
@@ -287,7 +288,7 @@ def drawWindow():
     DoneList.bind("<Left>", _FocusInProgress)
     # DoneList.bind("<Down>", _FocusDownDone)
 
-    DoneButton = Widget.GetButton(DoneFrame, _Text="Archive", _Command=lambda:MoveForward(s_List[3]))
+    DoneButton = Widget.GetButton(DoneFrame, _Text="Archive", _Command=lambda: MoveForward(s_List[3]))
     DoneButton.pack(side=BOTTOM, fill=X)
 
     DoneEntry = Widget.GetEntry(DoneFrame)
@@ -295,7 +296,7 @@ def drawWindow():
     DoneEntry.bind("<Return>", _AddToDone)
     # DoneEntry.bind("<Up>", _FocusUpDone)
 
-    # / ---------------------------------------------------------------------------------------------------
+    # / ----------------------------------------------------------------------------------------------------------------
 
     LoadData()
 

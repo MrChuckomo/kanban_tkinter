@@ -9,6 +9,7 @@ __Creation_Date__ = "15-Jun-2017"
 import sqlite3 as Sql
 import os
 
+
 def InitDb():
 
     if not os.path.isfile("kanban.db"):
@@ -23,6 +24,7 @@ def InitDb():
 
         KanbanConnetion.close()
 
+
 def SelectData(_Table):
 
     KanbanConnetion = Sql.connect("kanban.db")
@@ -30,11 +32,12 @@ def SelectData(_Table):
 
     KanbanCursor.execute("SELECT * FROM " + _Table)
 
-    Data = KanbanCursor.fetchall();
+    Data = KanbanCursor.fetchall()
 
     KanbanConnetion.close()
 
     return Data
+
 
 def InsertData(_Table, _Task):
 
@@ -104,6 +107,7 @@ def _GetIdWhereTaskIs(_Table, _Task):
             Id = Row[0]
 
     return Id
+
 
 def _GetLastId(_Table):
 
