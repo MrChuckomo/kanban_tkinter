@@ -7,7 +7,7 @@ __Creation_Date__ = "15-Jun-2017"
 """
 # / --------------------------------------------------------------------------------------------------------------------
 
-from Tkinter import Tk, OptionMenu, StringVar, END, ACTIVE, BOTH, BOTTOM, LEFT, RIGHT, X, TOP
+from tkinter import Tk, OptionMenu, StringVar, END, ACTIVE, BOTH, BOTTOM, LEFT, RIGHT, X, TOP
 from view import components as TkComponents
 from view import color as Color
 from model import kanban_db as Db

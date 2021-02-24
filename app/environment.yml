@@ -1,0 +1,7 @@
+name: kanban_tkinter
+channels:
+    - conda-forge
+    - anaconda
+dependencies:
+    - python=3.8.5
+    - pip
