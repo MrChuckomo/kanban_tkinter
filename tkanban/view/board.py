@@ -237,7 +237,7 @@ def drawWindow():
     ToDoList.bind("<Right>", _FocusInProgress)
     # ToDoList.bind("<Down>", _FocusDownToDo)
 
-    ToDoButton = Widget.GetButton(ToDoFrame, _Text="In Progress", _Command=lambda: MoveForward(s_List[1]))
+    ToDoButton = Widget.GetButton(ToDoFrame, text="In Progress", cmd=lambda: MoveForward(s_List[1]))
     ToDoButton.pack(side=BOTTOM, fill=X)
 
     ToDoEntry = Widget.GetEntry(ToDoFrame)
@@ -260,7 +260,7 @@ def drawWindow():
     InProgressList.bind("<Left>", _FocusTodo)
     # InProgressList.bind("<Down>", _FocusDownInProgress)
 
-    InProgressButton = Widget.GetButton(InProgressFrame, _Text="Done", _Command=lambda: MoveForward(s_List[2]))
+    InProgressButton = Widget.GetButton(InProgressFrame, text="Done", cmd=lambda: MoveForward(s_List[2]))
     InProgressButton.pack(side=BOTTOM, fill=X)
 
     InProgressEntry = Widget.GetEntry(InProgressFrame)
@@ -282,7 +282,7 @@ def drawWindow():
     DoneList.bind("<Left>", _FocusInProgress)
     # DoneList.bind("<Down>", _FocusDownDone)
 
-    DoneButton = Widget.GetButton(DoneFrame, _Text="Archive", _Command=lambda: MoveForward(s_List[3]))
+    DoneButton = Widget.GetButton(DoneFrame, text="Archive", cmd=lambda: MoveForward(s_List[3]))
     DoneButton.pack(side=BOTTOM, fill=X)
 
     DoneEntry = Widget.GetEntry(DoneFrame)
