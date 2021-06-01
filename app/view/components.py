@@ -6,12 +6,11 @@ __Version__       = "v1.0.0"
 __Creation_Date__ = "16-Jun-2017"
 """
 
-
-from tkinter import Listbox, LabelFrame, Frame, Entry, Button
 from view import color as Color
+from tkinter import Listbox, LabelFrame, Frame, Entry, Button
 
-# / --------------------------------------------------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------------------------------------------------
 
 class CTkComponents:
 

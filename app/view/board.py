@@ -1,22 +1,23 @@
 """
-__File__          = "board.py"
-__Description__   = ""
-__Author__        = "MrChuckomo"
-__Version__       = "v1.0.0"
-__Creation_Date__ = "15-Jun-2017"
-"""
-# / --------------------------------------------------------------------------------------------------------------------
+File          : board.py
+Description   : 
 
-from tkinter import Tk, OptionMenu, StringVar, END, ACTIVE, BOTH, BOTTOM, LEFT, RIGHT, X, TOP
-from view import components as TkComponents
-from view import color as Color
-from model import kanban_db as Db
+Author        : MrChuckomo
+Version       : v1.0.0
+Creation Date : 15-Jun-2017
+"""
 
 import sys
+
 sys.path.append("../")
 
+from view import color as Color
+from view import components as TkComponents
+from model import kanban_db as Db
+from tkinter import Tk, OptionMenu, StringVar, END, ACTIVE, BOTH, BOTTOM, LEFT, RIGHT, X, TOP
 
-# / --------------------------------------------------------------------------------------------------------------------
+
+# ---------------------------------------------------------------------------------------------------------------------
 
 s_List = ["todo", "in_progress", "done", "archives"]
 
@@ -24,7 +25,6 @@ s_List = ["todo", "in_progress", "done", "archives"]
 def drawWindow():
 
     def LoadData():
-
         ToDoList.delete(0, END)
         InProgressList.delete(0, END)
         DoneList.delete(0, END)
@@ -37,7 +37,6 @@ def drawWindow():
             DoneList.insert(END, Row[1])
 
     def Add(_List):
-
         if _List == s_List[0] and ToDoEntry.get() != "":
             Db.InsertData(_Table="todo", _Task=ToDoEntry.get())
             ToDoEntry.delete(0, END)
@@ -51,7 +50,6 @@ def drawWindow():
         LoadData()
 
     def Delete(_List):
-
         if _List == s_List[0]:
             Db.DeleteDataByTask(_Table="todo", _Task=ToDoList.get(ACTIVE))
         elif _List == s_List[1]:
@@ -62,7 +60,6 @@ def drawWindow():
         LoadData()
 
     def MoveForward(_List):
-
         if _List == s_List[1] and ToDoList.get(ACTIVE) != "":
             Db.InsertData(_Table="inprogress", _Task=ToDoList.get(ACTIVE))
             Db.DeleteDataByTask(_Table="todo", _Task=ToDoList.get(ACTIVE))
@@ -78,7 +75,6 @@ def drawWindow():
         LoadData()
 
     def MoveBackward(_List):
-
         if _List == s_List[0] and InProgressList.get(ACTIVE) != "":
             Db.InsertData(_Table="todo", _Task=InProgressList.get(ACTIVE))
             Db.DeleteDataByTask(_Table="inprogress", _Task=InProgressList.get(ACTIVE))
@@ -90,7 +86,6 @@ def drawWindow():
         LoadData()
 
     def FocusDown(_List):
-
         if _List == s_List[0] and ToDoList.get(ACTIVE) == ToDoList.get(END):
             ToDoEntry.focus()
             ToDoEntry.delete(0, END)
@@ -102,7 +97,6 @@ def drawWindow():
             DoneEntry.delete(0, END)
 
     def FocusUp(_List):
-
         if _List == s_List[0]:
             ToDoList.focus()
             ToDoEntry.delete(0, END)

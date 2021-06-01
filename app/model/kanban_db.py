@@ -1,19 +1,20 @@
 """
-__File__          = "kanban_db.py"
-__Description__   = "Database handling for the whole Kanban board"
-__Author__        = "MrChuckomo"
-__Version__       = "v1.0.0"
-__Creation_Date__ = "15-Jun-2017"
+File          : kanban_db.py
+Description   : Database handling for the whole Kanban board
+
+Author        : MrChuckomo
+Version       : v1.0.0
+Creation Date : 15-Jun-2017
 """
 
-import sqlite3 as Sql
 import os
+import sqlite3 as Sql
 
+
+# ---------------------------------------------------------------------------------------------------------------------
 
 def InitDb():
-
     if not os.path.isfile("kanban.db"):
-
         KanbanConnetion = Sql.connect("kanban.db")
         KanbanCursor = KanbanConnetion.cursor()
 
