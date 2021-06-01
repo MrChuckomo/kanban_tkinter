@@ -7,10 +7,7 @@ Version       : v1.0.0
 Creation Date : 15-Jun-2017
 """
 
-import sys
-
-sys.path.append("../")
-
+from tkanban import RES_FOLDER
 from tkanban.view import color as Color
 from tkanban.view import components as TkComponents
 from tkanban.model import kanban_db as Db
@@ -25,6 +22,11 @@ s_List = ["todo", "in_progress", "done", "archives"]
 def drawWindow():
 
     def LoadData():
+        """
+        Load the data into all list-widgets.
+        First remove all data completely from each list.
+        Then populate each list with the data from the database.
+        """
         ToDoList.delete(0, END)
         InProgressList.delete(0, END)
         DoneList.delete(0, END)
@@ -181,8 +183,7 @@ def drawWindow():
         ToDoEntry.focus()
 
     def _ExportToCsv(_Self=0):
-
-        File = open("kanban_export.csv", "w")
+        File = open(f"{RES_FOLDER}kanban_export.csv", "w")
 
         for Row in ToDoList.get(0, END):
             File.write(str(Row) + ";to_do\n")
