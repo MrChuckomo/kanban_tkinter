@@ -1,4 +1,4 @@
 # Byte-compiled / optimized / DLL files
 .vscode
 __pycache__/
-app/kanban.db
+tkanban/kanban.db

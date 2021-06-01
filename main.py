@@ -6,8 +6,8 @@ __Version__       = "v1.0.0"
 __Creation_Date__ = "15-Jun-2017"
 """
 
-from view import board as BoardGui
-from model import kanban_db as Db
+from tkanban.view import board as BoardGui
+from tkanban.model import kanban_db as Db
 
 Db.InitDb()
 
