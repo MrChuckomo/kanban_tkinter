@@ -15,10 +15,6 @@ from tkanban import DB_FILE
 # ---------------------------------------------------------------------------------------------------------------------
 
 def InitDb():
-
-    print(DB_FILE)
-    print(os.path.exists(DB_FILE))
-
     if not os.path.exists(DB_FILE):
         KanbanConnetion = Sql.connect(DB_FILE)
         KanbanCursor = KanbanConnetion.cursor()
