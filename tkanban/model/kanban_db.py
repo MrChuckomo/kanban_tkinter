@@ -10,12 +10,17 @@ Creation Date : 15-Jun-2017
 import os
 import sqlite3 as Sql
 
+from tkanban import DB_FILE
 
 # ---------------------------------------------------------------------------------------------------------------------
 
 def InitDb():
-    if not os.path.isfile("kanban.db"):
-        KanbanConnetion = Sql.connect("kanban.db")
+
+    print(DB_FILE)
+    print(os.path.exists(DB_FILE))
+
+    if not os.path.exists(DB_FILE):
+        KanbanConnetion = Sql.connect(DB_FILE)
         KanbanCursor = KanbanConnetion.cursor()
 
         KanbanCursor.execute("CREATE TABLE todo(id INT PRIMARY KEY NOT NULL, todotask TEXT NOT NULL)")
@@ -28,7 +33,7 @@ def InitDb():
 
 def SelectData(_Table):
 
-    KanbanConnetion = Sql.connect("kanban.db")
+    KanbanConnetion = Sql.connect(DB_FILE)
     KanbanCursor = KanbanConnetion.cursor()
 
     KanbanCursor.execute("SELECT * FROM " + _Table)
@@ -42,7 +47,7 @@ def SelectData(_Table):
 
 def InsertData(_Table, _Task):
 
-    KanbanConnetion = Sql.connect("kanban.db")
+    KanbanConnetion = Sql.connect(DB_FILE)
     KanbanCursor = KanbanConnetion.cursor()
 
     _ExecuteInsertion(KanbanCursor, _Table, _GetLastId(_Table), _Task)
@@ -53,7 +58,7 @@ def InsertData(_Table, _Task):
 
 def DeleteDataById(_Table, _Id):
 
-    KanbanConnetion = Sql.connect("kanban.db")
+    KanbanConnetion = Sql.connect(DB_FILE)
     KanbanCursor = KanbanConnetion.cursor()
 
     _ExecuteDeletion(KanbanCursor, _Table, _Id)
@@ -64,7 +69,7 @@ def DeleteDataById(_Table, _Id):
 
 def DeleteDataByTask(_Table, _Task):
 
-    KanbanConnetion = Sql.connect("kanban.db")
+    KanbanConnetion = Sql.connect(DB_FILE)
     KanbanCursor = KanbanConnetion.cursor()
 
     _ExecuteDeletion(KanbanCursor, _Table, str(_GetIdWhereTaskIs(_Table, _Task)))
@@ -112,7 +117,7 @@ def _GetIdWhereTaskIs(_Table, _Task):
 
 def _GetLastId(_Table):
 
-    KanbanConnetion = Sql.connect("kanban.db")
+    KanbanConnetion = Sql.connect(DB_FILE)
     KanbanCursor = KanbanConnetion.cursor()
 
     Data = SelectData(_Table)
