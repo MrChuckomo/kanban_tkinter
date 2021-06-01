@@ -6,7 +6,7 @@ __Version__       = "v1.0.0"
 __Creation_Date__ = "16-Jun-2017"
 """
 
-from view import color as Color
+from tkanban.view import color as Color
 from tkinter import Listbox, LabelFrame, Frame, Entry, Button
 
 

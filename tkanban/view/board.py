@@ -11,9 +11,9 @@ import sys
 
 sys.path.append("../")
 
-from view import color as Color
-from view import components as TkComponents
-from model import kanban_db as Db
+from tkanban.view import color as Color
+from tkanban.view import components as TkComponents
+from tkanban.model import kanban_db as Db
 from tkinter import Tk, OptionMenu, StringVar, END, ACTIVE, BOTH, BOTTOM, LEFT, RIGHT, X, TOP
 
 
