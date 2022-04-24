@@ -1,21 +1,25 @@
 {
-    "name": "default_board",
-    "columns": {
+    "_default": {
         "1": {
-            "title": "Todo",
-            "show": true
-        },
-        "2": {
-            "title": "In Progress",
-            "show": true
-        },
-        "3": {
-            "title": "Done",
-            "show": true
-        },
-        "4": {
-            "title": "Archives",
-            "show": false
+            "name": "default_board",
+            "columns": {
+                "1": {
+                    "title": "Todo",
+                    "show": true
+                },
+                "2": {
+                    "title": "In Progress",
+                    "show": true
+                },
+                "3": {
+                    "title": "Done",
+                    "show": true
+                },
+                "4": {
+                    "title": "Archives",
+                    "show": false
+                }
+            }
         }
     }
 }

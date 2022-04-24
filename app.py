@@ -6,7 +6,6 @@ Creation Date: 24-Apr-2022
 
 import dearpygui.dearpygui as dpg
 
-from math import sin
 from tinydb import TinyDB
 
 dpg.create_context()
@@ -53,12 +52,15 @@ def create_new_task(sender, data):
 
     dpg.configure_item(sender, default_value='')
 
+# callback runs when user attempts to connect attributes
+def link_callback(sender, app_data):
+    # app_data -> (link_id1, link_id2)
+    dpg.add_node_link(app_data[0], app_data[1], parent=sender)
 
-sindatax = []
-sindatay = []
-for i in range(0, 500):
-    sindatax.append(i / 1000)
-    sindatay.append(0.5 + 0.5 * sin(50 * i / 1000))
+# callback runs when user attempts to disconnect attributes
+def delink_callback(sender, app_data):
+    # app_data -> link_id
+    dpg.delete_item(app_data)
 
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -135,13 +137,27 @@ with dpg.window(tag='primary_window'):
                     dpg.add_pie_series(0.5, 0.5, 0.5, values=data, labels=list(db.tables()))
 
         with dpg.tab(tag='settings_tab', label='Settings'):
-            dpg.add_button(label='Add Item', tag='add_item', callback=add_item)
+            board = TinyDB('./res/boards/default_board.json').get(doc_id=1)
+            dpg.add_button(label='Add column/node', tag='add_item', callback=add_item)
 
             with dpg.group(horizontal=True):
-                with dpg.child_window(tag='tab_settings-window', width=600, autosize_x=False):
-                    dpg.add_button(label='Add Item', callback=add_item)
-                with dpg.child_window(tag='tab_settings-window2'):
-                    dpg.add_button(label='Add Item', callback=add_item)
+                with dpg.child_window(tag='tab_settings-window', width=300, autosize_x=False):
+                    dpg.add_button(label='Save Board Settings', callback=add_item)
+                    dpg.add_input_text(label='Board Name', default_value=board['name'], enabled=False)
+
+                with dpg.node_editor(callback=link_callback, delink_callback=delink_callback):
+                    for id in board['columns']:
+                        with dpg.node(label=f'Node {id}', pos=((int(id)-1) * 250, (int(id)-1) * 25)):
+                            with dpg.node_attribute(label='Node A1', attribute_type=dpg.mvNode_Attr_Static):
+                                dpg.add_input_text(label='Column Name', width=100, default_value=board['columns'][id]['title'])
+                                dpg.add_checkbox(label='Column visible', default_value=board['columns'][id]['show'])
+
+                            with dpg.node_attribute(label='Node A2'):
+                                dpg.add_input_text(label='Predecessor', width=100)
+
+                            with dpg.node_attribute(label='Node A3', attribute_type=dpg.mvNode_Attr_Output):
+                                dpg.add_input_text(label='Successor', width=100)
+
 
 # ---------------------------------------------------------------------------------------------------------------------
 # Theme
