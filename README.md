@@ -2,8 +2,7 @@
 
 A simple Kanban Board made with Python and `tkinter`.
 
-![img](doc/kanban_screenshot.png)
-![img](doc/kanban_screenshot_dark.png)
+![img](doc/dear_kanban-1.png)
 
 ## Feature list
 
