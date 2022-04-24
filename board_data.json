@@ -1,0 +1,24 @@
+{
+    "todo": {
+        "1": {
+            "value": "My very fist task"
+        },
+        "2": {
+            "value": "We need to be able to delete tasks"
+        },
+        "3": {
+            "value": "Drag and Drop for items"
+        },
+        "4": {
+            "value": "Setting changes should write into custom settings file"
+        }
+    },
+    "in_progress": {
+        "1": {
+            "value": "Data gets already saved"
+        },
+        "2": {
+            "value": "Building stat-charts"
+        }
+    }
+}
