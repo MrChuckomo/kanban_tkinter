@@ -3,9 +3,12 @@ File         : app.py
 Description  :
 Creation Date: 24-Apr-2022
 """
-from re import L
-from subprocess import call
+
 import dearpygui.dearpygui as dpg
+
+from math import sin
+
+dpg.create_context()
 
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -13,15 +16,33 @@ import dearpygui.dearpygui as dpg
 def open_debug(sender, data):
     dpg.show_debug()
 
+def open_fonts(sender, data):
+    dpg.show_font_manager()
+
+def open_style_editor(sender, data):
+    dpg.show_style_editor()
+
 def open_metrics(sender, data):
     dpg.show_metrics()
+
+def add_item(sender, data):
+    print(sender)
+    print(data)
+    dpg.add_button(label='New Button', parent='primary_window', tag='new_btn')
+
+def create_new_task(sender, data):
+    print(sender, data)
+
+sindatax = []
+sindatay = []
+for i in range(0, 500):
+    sindatax.append(i / 1000)
+    sindatay.append(0.5 + 0.5 * sin(50 * i / 1000))
 
 
 # ---------------------------------------------------------------------------------------------------------------------
 
-dpg.create_context()
-
-with dpg.window(tag='Primary Window'):
+with dpg.window(tag='primary_window'):
 
     with dpg.menu_bar():
         with dpg.menu(label='File'):
@@ -31,38 +52,78 @@ with dpg.window(tag='Primary Window'):
             dpg.add_menu_item(label='New...')
         with dpg.menu(label='Help'):
             dpg.add_menu_item(label='Debug', callback=open_debug)
+            dpg.add_menu_item(label='Fonts Manager', callback=open_fonts)
+            dpg.add_menu_item(label='Style Editor', callback=open_style_editor)
             dpg.add_menu_item(label='Metrics', callback=open_metrics)
 
-    dpg.add_text('Project: Test 123')
+    with dpg.tab_bar(tag='primary_tabbar'):
+        with dpg.tab(label='Board'):
+            dpg.add_text(default_value='Project: Test 123', tag='board_title')
 
-    with dpg.table(header_row=False):
-        dpg.add_table_column()
-        dpg.add_table_column()
-        dpg.add_table_column()
+            with dpg.tooltip('board_title'):
+                dpg.add_text('The name of your current board')
 
-        with dpg.table_row():
-            dpg.add_input_text()
-            dpg.add_input_text()
-            dpg.add_input_text()
+            with dpg.table(header_row=True, borders_outerH=False, borders_innerV=True, resizable=True):
 
-    with dpg.table(header_row=True, borders_outerH=False, borders_innerV=True, resizable=True, policy=dpg.mvTable_SizingStretchProp):
+                # use add_table_column to add columns to the table,
+                # table columns use child slot 0
+                dpg.add_table_column(label='Todo')
+                dpg.add_table_column(label='In Progress')
+                dpg.add_table_column(label='Done')
 
-        # use add_table_column to add columns to the table,
-        # table columns use child slot 0
-        dpg.add_table_column(label='Todo')
-        dpg.add_table_column(label='In Progress')
-        dpg.add_table_column(label='Done')
+                with dpg.table_row():
+                    dpg.add_input_text(tag='todo_input', on_enter=True, width=-1, callback=create_new_task, hint='New TODO task...')
+                    dpg.add_input_text(tag='progress_input', on_enter=True, width=-1, callback=create_new_task, hint='New IN PROGRESS task...')
+                    dpg.add_input_text(tag='done_input', on_enter=True, width=-1, callback=create_new_task, hint='New DONE task...')
 
-        # add_table_next_column will jump to the next row
-        # once it reaches the end of the columns
-        # table next column use slot 1
-        for i in range(0, 14):
-            with dpg.table_row():
-                for j in range(0, 3):
-                    dpg.add_text(f'Row{i} Column{j}')
+                with dpg.table_row():
+                    with dpg.child_window(tag='todo_win', autosize_x=False, border=False):
+                        dpg.add_selectable(label='A dummy todo task')
+                    with dpg.child_window(tag='progress_win', autosize_x=False, border=False):
+                        dpg.add_selectable(label='A dummy progress task')
+                    with dpg.child_window(tag='done_win', autosize_x=False, border=False):
+                        dpg.add_selectable(label='A dummy done task')
+                        dpg.add_selectable(label='A dummy done task 2')
+                        dpg.add_selectable(label='A dummy done task 3')
 
 
+        with dpg.tab(label='Stats'):
+            with dpg.plot(label='Line Series'):
+                # optionally create legend
+                dpg.add_plot_legend()
 
+                # REQUIRED: create x and y axes
+                dpg.add_plot_axis(dpg.mvXAxis, label='x')
+                dpg.add_plot_axis(dpg.mvYAxis, label='y', tag='y_axis')
+
+                # series belong to a y axis
+                dpg.add_line_series(sindatax, sindatay, label='0.5 + 0.5 * sin(x)', parent='y_axis')
+
+        with dpg.tab(label='Settings'):
+            dpg.add_button(label='Add Item', tag='add_item', callback=add_item)
+
+            with dpg.group(horizontal=True):
+                with dpg.child_window(tag='tab_settings-window', width=600, autosize_x=False):
+                    dpg.add_button(label='Add Item', callback=add_item)
+                with dpg.child_window(tag='tab_settings-window2'):
+                    dpg.add_button(label='Add Item', callback=add_item)
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Theme
+
+with dpg.theme() as input_theme:
+    with dpg.theme_component(dpg.mvAll):
+        dpg.add_theme_color(dpg.mvThemeCol_FrameBg, (42, 40, 46), category=dpg.mvThemeCat_Core)
+        dpg.add_theme_color(dpg.mvThemeCol_ChildBg, (42, 40, 46), category=dpg.mvThemeCat_Core)
+        dpg.add_theme_style(dpg.mvStyleVar_FrameRounding, 8, category=dpg.mvThemeCat_Core)
+        dpg.add_theme_style(dpg.mvStyleVar_FramePadding, x=10, y=10, category=dpg.mvThemeCat_Core)
+
+dpg.bind_item_theme('todo_input', input_theme)
+dpg.bind_item_theme('progress_input', input_theme)
+dpg.bind_item_theme('done_input', input_theme)
+# dpg.bind_item_theme('todo_win', input_theme)
+# dpg.bind_item_theme('progress_win', input_theme)
+# dpg.bind_item_theme('done_win', input_theme)
 
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -70,6 +131,6 @@ with dpg.window(tag='Primary Window'):
 dpg.create_viewport(title='Kanban Board', width=1200, height=600)
 dpg.setup_dearpygui()
 dpg.show_viewport()
-dpg.set_primary_window('Primary Window', True)
+dpg.set_primary_window('primary_window', True)
 dpg.start_dearpygui()
 dpg.destroy_context()
