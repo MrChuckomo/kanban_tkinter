@@ -1,0 +1,9 @@
+{
+    "default.board": "default_board.json",
+    "db.drivers": [
+        "tinydb",
+        "sqlite3"
+    ],
+    "db.driver": "tinydb",
+    "db.path": "./"
+}
