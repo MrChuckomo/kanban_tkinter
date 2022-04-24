@@ -1,9 +1,13 @@
 {
-    "default.board": "default_board.json",
-    "db.drivers": [
-        "tinydb",
-        "sqlite3"
-    ],
-    "db.driver": "tinydb",
-    "db.path": "./"
+    "_default": {
+        "1": {
+            "default.board": "default_board.json",
+            "db.drivers": [
+                "tinydb",
+                "sqlite3"
+            ],
+            "db.driver": "tinydb",
+            "db.path": "./"
+        }
+    }
 }
