@@ -33,3 +33,21 @@ $ conda init zsh
 # Activate your new created python env
 $ conda activate ./ops/pyenv/kanban_env
 ```
+
+## Windows [Optional]
+
+## Linux [Optional]
+
+## macOS [Optional]
+
+When trying to start the `DearPyGUI` app it's possible that you encounter the following error: 
+
+> Library not loaded: /usr/local/opt/libpng/lib/libpng16.16.dylib
+
+```bash
+# Check if the file exsits
+$ ls -la /usr/local/opt/libpng/lib/libpng16.16.dylib
+
+# Install the libpng using brew
+$ brew install libpng
+```
