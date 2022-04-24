@@ -20,6 +20,9 @@ print(db.table('done').all())
 
 # ---------------------------------------------------------------------------------------------------------------------
 
+def close_app(sender, data):
+    quit()
+
 def open_debug(sender, data):
     dpg.show_debug()
 
@@ -64,15 +67,28 @@ with dpg.window(tag='primary_window'):
 
     with dpg.menu_bar():
         with dpg.menu(label='File'):
-            dpg.add_menu_item(label='Save')
-            dpg.add_menu_item(label='Close')
+            dpg.add_menu_item(label='Preferences')
+            dpg.add_separator()
+            dpg.add_menu_item(label='Close', callback=close_app)
         with dpg.menu(label='Board'):
             dpg.add_menu_item(label='New...')
+            dpg.add_menu_item(label='Rename...')
+            dpg.add_menu_item(label='Delete...')
+            dpg.add_separator()
+            with dpg.menu(label='Open Recent'):
+                dpg.add_menu_item(label='Default Board')
+            dpg.add_separator()
+            dpg.add_menu_item(label='Archive completed tasks')
+            with dpg.menu(label='Database'):
+                dpg.add_menu_item(label='Open')
+                dpg.add_menu_item(label='Copy path')
         with dpg.menu(label='Help'):
-            dpg.add_menu_item(label='Debug', callback=open_debug)
-            dpg.add_menu_item(label='Fonts Manager', callback=open_fonts)
-            dpg.add_menu_item(label='Style Editor', callback=open_style_editor)
-            dpg.add_menu_item(label='Metrics', callback=open_metrics)
+            with dpg.menu(label='Development'):
+                dpg.add_menu_item(label='Debug', callback=open_debug)
+                dpg.add_menu_item(label='Fonts Manager', callback=open_fonts)
+                dpg.add_menu_item(label='Style Editor', callback=open_style_editor)
+                dpg.add_menu_item(label='Metrics', callback=open_metrics)
+            dpg.add_menu_item(label='About')
 
     with dpg.tab_bar(tag='primary_tabbar'):
         with dpg.tab(label='Board'):
