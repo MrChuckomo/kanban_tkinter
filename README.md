@@ -34,11 +34,11 @@ $ conda init zsh
 $ conda activate ./ops/pyenv/kanban_env
 ```
 
-## Windows [Optional]
+## Windows - `Optional`
 
-## Linux [Optional]
+## Linux - `Optional`
 
-## macOS [Optional]
+## macOS - `Optional`
 
 When trying to start the `DearPyGUI` app it's possible that you encounter the following error: 
 
