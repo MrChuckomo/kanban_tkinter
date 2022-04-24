@@ -31,7 +31,17 @@ def add_item(sender, data):
     dpg.add_button(label='New Button', parent='primary_window', tag='new_btn')
 
 def create_new_task(sender, data):
-    print(sender, data)
+    if sender == 'todo_input':
+        dpg.add_selectable(label=data, parent='todo_win')
+    elif sender == 'progress_input':
+        dpg.add_selectable(label=data, parent='progress_win')
+    elif sender == 'done_input':
+        dpg.add_selectable(label=data, parent='done_win')
+
+    dpg.configure_item(sender, default_value='')
+
+    # TODO: Write into tinyDB
+
 
 sindatax = []
 sindatay = []
@@ -77,11 +87,11 @@ with dpg.window(tag='primary_window'):
                     dpg.add_input_text(tag='done_input', on_enter=True, width=-1, callback=create_new_task, hint='New DONE task...')
 
                 with dpg.table_row():
-                    with dpg.child_window(tag='todo_win', autosize_x=False, border=False):
+                    with dpg.child_window(tag='todo_win', autosize_x=False, horizontal_scrollbar=True, border=False):
                         dpg.add_selectable(label='A dummy todo task')
-                    with dpg.child_window(tag='progress_win', autosize_x=False, border=False):
+                    with dpg.child_window(tag='progress_win', autosize_x=False, horizontal_scrollbar=True, border=False):
                         dpg.add_selectable(label='A dummy progress task')
-                    with dpg.child_window(tag='done_win', autosize_x=False, border=False):
+                    with dpg.child_window(tag='done_win', autosize_x=False, horizontal_scrollbar=True, border=False):
                         dpg.add_selectable(label='A dummy done task')
                         dpg.add_selectable(label='A dummy done task 2')
                         dpg.add_selectable(label='A dummy done task 3')
@@ -113,8 +123,8 @@ with dpg.window(tag='primary_window'):
 
 with dpg.theme() as input_theme:
     with dpg.theme_component(dpg.mvAll):
-        dpg.add_theme_color(dpg.mvThemeCol_FrameBg, (42, 40, 46), category=dpg.mvThemeCat_Core)
-        dpg.add_theme_color(dpg.mvThemeCol_ChildBg, (42, 40, 46), category=dpg.mvThemeCat_Core)
+        # dpg.add_theme_color(dpg.mvThemeCol_FrameBg, (42, 40, 46), category=dpg.mvThemeCat_Core)
+        # dpg.add_theme_color(dpg.mvThemeCol_ChildBg, (42, 40, 46), category=dpg.mvThemeCat_Core)
         dpg.add_theme_style(dpg.mvStyleVar_FrameRounding, 8, category=dpg.mvThemeCat_Core)
         dpg.add_theme_style(dpg.mvStyleVar_FramePadding, x=10, y=10, category=dpg.mvThemeCat_Core)
 
