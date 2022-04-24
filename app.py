@@ -106,18 +106,16 @@ with dpg.window(tag='primary_window'):
                 dpg.add_table_column(label='Done')
 
                 with dpg.table_row():
-                    dpg.add_input_text(tag='todo_input', on_enter=True, width=-1, callback=create_new_task, hint='New TODO task...')
-                    dpg.add_input_text(tag='progress_input', on_enter=True, width=-1, callback=create_new_task, hint='New IN PROGRESS task...')
-                    dpg.add_input_text(tag='done_input', on_enter=True, width=-1, callback=create_new_task, hint='New DONE task...')
-
-                with dpg.table_row():
                     with dpg.child_window(tag='todo_win', autosize_x=False, horizontal_scrollbar=True, border=False):
+                        dpg.add_input_text(tag='todo_input', on_enter=True, width=-1, callback=create_new_task, hint='New TODO task...')
                         for task in db.table('todo').all():
                             dpg.add_selectable(label=task['value'])
                     with dpg.child_window(tag='progress_win', autosize_x=False, horizontal_scrollbar=True, border=False):
+                        dpg.add_input_text(tag='progress_input', on_enter=True, width=-1, callback=create_new_task, hint='New IN PROGRESS task...')
                         for task in db.table('in_progress').all():
                             dpg.add_selectable(label=task['value'])
                     with dpg.child_window(tag='done_win', autosize_x=False, horizontal_scrollbar=True, border=False):
+                        dpg.add_input_text(tag='done_input', on_enter=True, width=-1, callback=create_new_task, hint='New DONE task...')
                         for task in db.table('done').all():
                             dpg.add_selectable(label=task['value'])
 
