@@ -5,6 +5,8 @@ Creation Date: 24-Apr-2022
 """
 
 import dearpygui.dearpygui as dpg
+import dearpygui.demo as demo
+
 
 from tinydb import TinyDB
 
@@ -24,6 +26,9 @@ def close_app(sender, data):
 
 def open_debug(sender, data):
     dpg.show_debug()
+
+def open_demo(sender, data):
+    demo.show_demo()
 
 def open_fonts(sender, data):
     dpg.show_font_manager()
@@ -62,6 +67,27 @@ def delink_callback(sender, app_data):
     # app_data -> link_id
     dpg.delete_item(app_data)
 
+def move_task(sender, app_data):
+    src, item, data = app_data
+    print(sender, src, item, data)
+
+    dpg.configure_item(item, show=False)
+    dpg.remove_alias(item)
+
+    # TODO: Update db file accordingly
+
+    if sender == 'todo_win':
+        dpg.add_selectable(label=data, parent='todo_win')
+        # db.table('todo').insert({'value': data})
+    elif sender == 'progress_win':
+        dpg.add_selectable(label=data, tag=data, parent=sender)
+        with dpg.drag_payload(parent=dpg.last_item(), drag_data=('progress_win', dpg.last_item(), data), payload_type='move_on_board'):
+            dpg.add_text(data)
+        # db.table('in_progress').insert({'value': data})
+    elif sender == 'done_win':
+        dpg.add_selectable(label=data, parent=sender)
+        # db.table('done').insert({'value': data})
+
 
 # ---------------------------------------------------------------------------------------------------------------------
 
@@ -90,6 +116,7 @@ with dpg.window(tag='primary_window'):
                 dpg.add_menu_item(label='Fonts Manager', callback=open_fonts)
                 dpg.add_menu_item(label='Style Editor', callback=open_style_editor)
                 dpg.add_menu_item(label='Metrics', callback=open_metrics)
+                dpg.add_menu_item(label='Demo', callback=open_demo)
             dpg.add_menu_item(label='About')
 
     with dpg.tab_bar(tag='primary_tabbar'):
@@ -100,7 +127,6 @@ with dpg.window(tag='primary_window'):
                 dpg.add_text('The name of your current board')
 
             with dpg.table(header_row=True, borders_outerH=False, borders_innerV=True, resizable=True):
-
                 # use add_table_column to add columns to the table,
                 # table columns use child slot 0
                 dpg.add_table_column(label='Todo')
@@ -111,15 +137,19 @@ with dpg.window(tag='primary_window'):
                     with dpg.child_window(tag='todo_win', autosize_x=False, horizontal_scrollbar=True, border=False):
                         dpg.add_input_text(tag='todo_input', on_enter=True, width=-1, callback=create_new_task, hint='New TODO task...')
                         for task in db.table('todo').all():
-                            dpg.add_selectable(label=task['value'])
-                    with dpg.child_window(tag='progress_win', autosize_x=False, horizontal_scrollbar=True, border=False):
+                            dpg.add_selectable(label=task['value'], tag=task['value'])
+                            with dpg.drag_payload(parent=dpg.last_item(), drag_data=('todo_win', dpg.last_item(), task['value']), payload_type='move_on_board'):
+                                dpg.add_text(task['value'])
+                    with dpg.child_window(tag='progress_win', drop_callback=move_task, payload_type='move_on_board', autosize_x=False, horizontal_scrollbar=True, border=False):
                         dpg.add_input_text(tag='progress_input', on_enter=True, width=-1, callback=create_new_task, hint='New IN PROGRESS task...')
                         for task in db.table('in_progress').all():
-                            dpg.add_selectable(label=task['value'])
-                    with dpg.child_window(tag='done_win', autosize_x=False, horizontal_scrollbar=True, border=False):
+                            dpg.add_selectable(label=task['value'], tag=task['value'])
+                            with dpg.drag_payload(parent=dpg.last_item(), drag_data=('progress_win', dpg.last_item(), task['value']), payload_type='move_on_board'):
+                                dpg.add_text(task['value'])
+                    with dpg.child_window(tag='done_win', drop_callback=move_task, payload_type='move_on_board', autosize_x=False, horizontal_scrollbar=True, border=False):
                         dpg.add_input_text(tag='done_input', on_enter=True, width=-1, callback=create_new_task, hint='New DONE task...')
                         for task in db.table('done').all():
-                            dpg.add_selectable(label=task['value'])
+                            dpg.add_selectable(label=task['value'], tag=task['value'])
 
         with dpg.tab(tag='stats_tab', label='Stats'):
             with dpg.plot(no_title=True, no_mouse_pos=True, width=250, height=250):
