@@ -4,6 +4,7 @@ A simple Kanban Board made with Python and `DearPyGUI`.
 
 ![img](doc/dear_kanban-board-1.png)
 ![img](doc/dear_kanban-stats-1.png)
+![img](doc/dear_kanban-settings-1.png)
 
 ## Feature list
 
