@@ -91,7 +91,7 @@ with dpg.window(tag='primary_window'):
             dpg.add_menu_item(label='About')
 
     with dpg.tab_bar(tag='primary_tabbar'):
-        with dpg.tab(label='Board'):
+        with dpg.tab(tag='board_tab', label='Board'):
             dpg.add_text(default_value='Project: Default Board', tag='board_title')
 
             with dpg.tooltip('board_title'):
@@ -121,7 +121,7 @@ with dpg.window(tag='primary_window'):
                         for task in db.table('done').all():
                             dpg.add_selectable(label=task['value'])
 
-        with dpg.tab(label='Stats'):
+        with dpg.tab(tag='stats_tab', label='Stats'):
             with dpg.plot(no_title=True, no_mouse_pos=True, width=250, height=250):
                 # create legend
                 dpg.add_plot_legend()
@@ -136,7 +136,7 @@ with dpg.window(tag='primary_window'):
                     dpg.set_axis_limits(dpg.last_item(), 0, 1)
                     dpg.add_pie_series(0.5, 0.5, 0.5, values=data, labels=list(db.tables()))
 
-        with dpg.tab(label='Settings'):
+        with dpg.tab(tag='settings_tab', label='Settings'):
             dpg.add_button(label='Add Item', tag='add_item', callback=add_item)
 
             with dpg.group(horizontal=True):
@@ -155,12 +155,25 @@ with dpg.theme() as input_theme:
         dpg.add_theme_style(dpg.mvStyleVar_FrameRounding, 8, category=dpg.mvThemeCat_Core)
         dpg.add_theme_style(dpg.mvStyleVar_FramePadding, x=10, y=10, category=dpg.mvThemeCat_Core)
 
+with dpg.theme() as tab_theme:
+    with dpg.theme_component(dpg.mvAll):
+        dpg.add_theme_style(dpg.mvStyleVar_FramePadding, x=10, y=10, category=dpg.mvThemeCat_Core)
+
+with dpg.theme() as global_theme:
+    with dpg.theme_component(dpg.mvAll):
+        dpg.add_theme_style(dpg.mvStyleVar_ItemSpacing, x=10, y=10, category=dpg.mvThemeCat_Core)
+        dpg.add_theme_style(dpg.mvStyleVar_FramePadding, x=10, y=10, category=dpg.mvThemeCat_Core)
+
+dpg.bind_theme(global_theme)
 dpg.bind_item_theme('todo_input', input_theme)
 dpg.bind_item_theme('progress_input', input_theme)
 dpg.bind_item_theme('done_input', input_theme)
 # dpg.bind_item_theme('todo_win', input_theme)
 # dpg.bind_item_theme('progress_win', input_theme)
 # dpg.bind_item_theme('done_win', input_theme)
+# dpg.bind_item_theme('board_tab', tab_theme)
+# dpg.bind_item_theme('stats_tab', tab_theme)
+# dpg.bind_item_theme('settings_tab', tab_theme)
 
 
 # ---------------------------------------------------------------------------------------------------------------------
