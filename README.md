@@ -1,6 +1,6 @@
-# Kanban (tkinter)
+# Kanban
 
-A simple Kanban Board made with Python and `tkinter`.
+A simple Kanban Board made with Python and `DearPyGUI`.
 
 ![img](doc/dear_kanban-1.png)
 
