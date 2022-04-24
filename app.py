@@ -105,18 +105,20 @@ with dpg.window(tag='primary_window'):
                         for task in db.table('done').all():
                             dpg.add_selectable(label=task['value'])
 
-
         with dpg.tab(label='Stats'):
-            with dpg.plot(label='Line Series'):
-                # optionally create legend
+            with dpg.plot(no_title=True, no_mouse_pos=True, width=250, height=250):
+                # create legend
                 dpg.add_plot_legend()
 
-                # REQUIRED: create x and y axes
-                dpg.add_plot_axis(dpg.mvXAxis, label='x')
-                dpg.add_plot_axis(dpg.mvYAxis, label='y', tag='y_axis')
+                # create x axis
+                dpg.add_plot_axis(dpg.mvXAxis, label='', no_gridlines=True, no_tick_marks=True, no_tick_labels=True)
+                dpg.set_axis_limits(dpg.last_item(), 0, 1)
 
-                # series belong to a y axis
-                dpg.add_line_series(sindatax, sindatay, label='0.5 + 0.5 * sin(x)', parent='y_axis')
+                # create y axis
+                with dpg.plot_axis(dpg.mvYAxis, label='', no_gridlines=True, no_tick_marks=True, no_tick_labels=True):
+                    data = [len(db.table(table).all()) for table in db.tables()]
+                    dpg.set_axis_limits(dpg.last_item(), 0, 1)
+                    dpg.add_pie_series(0.5, 0.5, 0.5, values=data, labels=list(db.tables()))
 
         with dpg.tab(label='Settings'):
             dpg.add_button(label='Add Item', tag='add_item', callback=add_item)
