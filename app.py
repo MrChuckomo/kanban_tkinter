@@ -155,7 +155,7 @@ with dpg.window(tag='primary_window'):
                             with dpg.node_attribute(label='Node A2'):
                                 dpg.add_input_text(label='Predecessor', width=100)
 
-                            with dpg.node_attribute(label='Node A3', attribute_type=dpg.mvNode_Attr_Output):
+                            with dpg.node_attribute(label='Node A3', shape=dpg.mvNode_PinShape_TriangleFilled, attribute_type=dpg.mvNode_Attr_Output):
                                 dpg.add_input_text(label='Successor', width=100)
 
 
