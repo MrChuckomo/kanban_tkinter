@@ -24,12 +24,12 @@ A simple Kanban Board made with Python and `tkinter`.
 $ conda env list
 
 # Create new python envs
-$ conda env create --prefix ./ops/pyenv/kanban_tkinter --file ./app/environment.yml
+$ conda env create --prefix ./ops/pyenv/kanban_env --file ./app/environment.yml
 
 # Init your shell to use conda activate
 $ conda init
 $ conda init zsh
 
 # Activate your new created python env
-$ conda activate ./ops/pyenv/kanban_tkinter
+$ conda activate ./ops/pyenv/kanban_env
 ```

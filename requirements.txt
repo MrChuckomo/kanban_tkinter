@@ -1,0 +1,2 @@
+dearpygui==1.5.1
+tinydb==4.7.0
