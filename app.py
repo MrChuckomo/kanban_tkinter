@@ -7,8 +7,15 @@ Creation Date: 24-Apr-2022
 import dearpygui.dearpygui as dpg
 
 from math import sin
+from tinydb import TinyDB
 
 dpg.create_context()
+
+db = TinyDB('board_data.json')
+
+print(db.table('todo').all())
+print(db.table('in_progress').all())
+print(db.table('done').all())
 
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -33,14 +40,15 @@ def add_item(sender, data):
 def create_new_task(sender, data):
     if sender == 'todo_input':
         dpg.add_selectable(label=data, parent='todo_win')
+        db.table('todo').insert({'value': data})
     elif sender == 'progress_input':
         dpg.add_selectable(label=data, parent='progress_win')
+        db.table('in_progress').insert({'value': data})
     elif sender == 'done_input':
         dpg.add_selectable(label=data, parent='done_win')
+        db.table('done').insert({'value': data})
 
     dpg.configure_item(sender, default_value='')
-
-    # TODO: Write into tinyDB
 
 
 sindatax = []
@@ -68,7 +76,7 @@ with dpg.window(tag='primary_window'):
 
     with dpg.tab_bar(tag='primary_tabbar'):
         with dpg.tab(label='Board'):
-            dpg.add_text(default_value='Project: Test 123', tag='board_title')
+            dpg.add_text(default_value='Project: Default Board', tag='board_title')
 
             with dpg.tooltip('board_title'):
                 dpg.add_text('The name of your current board')
@@ -88,13 +96,14 @@ with dpg.window(tag='primary_window'):
 
                 with dpg.table_row():
                     with dpg.child_window(tag='todo_win', autosize_x=False, horizontal_scrollbar=True, border=False):
-                        dpg.add_selectable(label='A dummy todo task')
+                        for task in db.table('todo').all():
+                            dpg.add_selectable(label=task['value'])
                     with dpg.child_window(tag='progress_win', autosize_x=False, horizontal_scrollbar=True, border=False):
-                        dpg.add_selectable(label='A dummy progress task')
+                        for task in db.table('in_progress').all():
+                            dpg.add_selectable(label=task['value'])
                     with dpg.child_window(tag='done_win', autosize_x=False, horizontal_scrollbar=True, border=False):
-                        dpg.add_selectable(label='A dummy done task')
-                        dpg.add_selectable(label='A dummy done task 2')
-                        dpg.add_selectable(label='A dummy done task 3')
+                        for task in db.table('done').all():
+                            dpg.add_selectable(label=task['value'])
 
 
         with dpg.tab(label='Stats'):
